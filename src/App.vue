@@ -1,7 +1,14 @@
 <template>
   <div id="app">
-    <Search @checkQuery='checkQuery'/>
-    <Server :query="query"/> 
+    <Search 
+    :result='result'
+    @checkQuery='checkQuery'
+    />
+    <Server 
+    :query='query'
+    :result='result'
+    @sendResult='sendResult'
+    /> 
   </div>
 </template>
 
@@ -9,18 +16,21 @@
 
 import Search from '@/components/Search';
 import Server from '@/components/Server';
-import '@/store/kladr.json'
 
 export default {
   name: 'App',
   data() {
     return {
-      query: null
+      query: null,
+      result: null
     }
   },
   methods: {
-    checkQuery(a) {
-      this.query = a;
+    checkQuery(query) {
+      this.query = query;
+    },
+    sendResult(result) {
+      this.result = result;
     }
   },
   components: { Search, Server }
