@@ -1,39 +1,16 @@
 <template>
   <div id="app">
-    <Search 
-    :result='result'
-    @checkQuery='checkQuery'
-    />
-    <Server 
-    :query='query'
-    :result='result'
-    @sendResult='sendResult'
-    /> 
+    <Search/>
   </div>
 </template>
 
 <script>
 
 import Search from '@/components/Search';
-import Server from '@/components/Server';
 
 export default {
   name: 'App',
-  data() {
-    return {
-      query: null,
-      result: null
-    }
-  },
-  methods: {
-    checkQuery(query) {
-      this.query = query;
-    },
-    sendResult(result) {
-      this.result = result;
-    }
-  },
-  components: { Search, Server }
+  components: { Search }
 }
 </script>
 
@@ -41,7 +18,6 @@ export default {
 
 @import 'less/reset.less';
 @import 'less/defaults.less';
-
 
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
