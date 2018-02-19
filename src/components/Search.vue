@@ -64,7 +64,7 @@
 		},
 		methods: {
 			handleClick(e) {
-			  var element = document.querySelector('.search__wrapper');
+			  let element = document.querySelector('.search__wrapper');
 			  if (e.target !== element && !element.contains(e.target)) {
 					this.handleBlur();
 			  }
@@ -127,7 +127,7 @@
 					this.activeTip += 1;
 				} else if(e.keyCode == 38 && this.activeTip > 0) {
 					this.activeTip -= 1;
-				}	else if(e.keyCode == 13) {
+				}	else if(e.keyCode == 13 && this.dropdown) {
 					this.chooseItem();
 				} else if(e.keyCode == 27) {
 					this.dropdown = null;
