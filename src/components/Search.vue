@@ -1,15 +1,16 @@
 <template>
 	<div class="search">
 		<div class="container">
+				<h4 class="label">Введите название города</h4>
 				<div class="search__wrapper">
 					<label class="search__inner">
 						<input 
-							tabindex="1"
+							v-model="query"
 						 	@input="checkQuery"
 							@focus="handleFocus"
 							class="search__input"
 							type="text"
-							v-model="query"
+							tabindex="1"
 							:class="{ incorrect : query && !tips && !focus }">
 						<span class="search__placeholder" v-if="!query">Начните вводить код или название</span>
 					</label>
@@ -24,7 +25,7 @@
 							<span>Загрузка</span>
 						</div>
 						<div class="search__variant" v-if="dropdown === 'notfound'">Не&nbsp;найдено</div>
-						<div class="" v-if="dropdown === 'error'">
+						<div v-if="dropdown === 'error'">
 							<div class="search__variant text text--size-xs text--color-gray">Что-то пошло не&nbsp;так. Проверьте соединение с&nbsp;интернетом и&nbsp;попробуйте еще раз</div>
 							<div @click="checkQuery" tabindex="2" class="tips__reload search__variant">Обновить</div>
 						</div>
@@ -32,10 +33,10 @@
 							<li class="tips__item" 
 									v-for="(tip, i) in tips" 
 									:data-item="i"
-									:tabindex='i + 1'
+									:tabindex="i + 1"
 									:class="[ i === activeTip ? 'is-active' : '']"
-									@mouseover='removeClass'
-									@click='chooseItem'>{{ tip['City'] }}</li>
+									@mouseover="changeActiveTip"
+									@click="chooseItem">{{ tip['City'] }}</li>
 						</ul>
 						<div class="tips__amount search__variant" v-if="tipsAmount > 5">
 							<span class="text text--size-xs text--color-gray">Показаны 5&nbsp;из {{ tipsAmount }} найденных городов. Уточните запрос, чтобы увидеть остальные</span>
@@ -95,7 +96,7 @@
 				this.query = this.tips[this.activeTip]['City'];
 				this.dropdown = null;
 			},
-			removeClass(e) {
+			changeActiveTip(e) {
 				e.stopPropagation();
 				this.activeTip = e.target.getAttribute('data-item');
 			},
@@ -106,7 +107,7 @@
 					setTimeout(() => {
 						this.showTips(data);
 					}, 1000 - delay);
-				} else {
+				} else if(this.dropdown) {
 					this.showTips(data);
 				};
 			},
@@ -182,6 +183,14 @@
 		max-width: 700px;
 		margin: 0 auto;
 		width: 100%;
+	}
+	.label {
+		font-family: @base-font;
+		line-height: 1.428;
+		font-weight: 400;
+		text-align: left;
+		font-size: 14px;
+		margin-bottom: .2em;
 	}
 	.text {
 		font-size: 14px;
